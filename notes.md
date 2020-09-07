@@ -133,7 +133,22 @@
   >         return S
   > ```
   >
-  > 
+
+- No.26. Remove Duplicates from Sorted Array, Easy
+
+  > Remove duplicates "in-place". It's easy. By Python, we can use set().
+
+- No.27. Remove Element, Easy
+
+  > "in-place" --> nums.count(val) and nums.remove(val)
+
+- No.28. Implement strStr(), Easy
+
+  > str.find() --> KMP algorithm, BM algorithm, Sunday...
+
+- No.29. Divide Two Integers, Medium
+
+
 
 ## **<span id="jump2">2. Linked list</span>**
 
@@ -144,6 +159,62 @@
 - No.19. Remove Nth Node From End of List, Medium
 
   > count the length and remove
+
+- No.21. Merge Two Sorted Lists,  Easy
+
+- No.23. Merge k Sorted Lists, Hard
+
+  > connect all values , sort them,  and generate  ListNode
+
+- No.24. Swap Nodes in Pairs, Medium
+
+  > understand the movement of pointers
+
+- No.25. Reverse Nodes in k-Group, Hard
+
+  > ```python
+  >         if k == 1:
+  >             return head
+  >         if head is None:
+  >             return None
+  > 
+  >         p = ListNode(0)
+  >         p.next = head
+  >         pre = p
+  >         curr = pre.next
+  >         if curr is None:
+  >             return head
+  >         next_p = curr
+  >         for i in range(k - 1):
+  >             next_p = next_p.next
+  >             if next_p is None:
+  >                 return head
+  > 
+  >         while curr:
+  > 
+  >             pre.next = next_p
+  >             curr_i = curr.next
+  >             curr.next = next_p.next
+  > 
+  >             curr_pre = curr
+  >             while curr_i != next_p:
+  >                 temp = curr_i.next
+  >                 curr_i.next = curr_pre
+  >                 curr_pre = curr_i
+  >                 curr_i = temp
+  >             next_p.next = curr_pre
+  > 
+  >             pre = curr
+  >             curr = curr.next
+  >             next_p = curr
+  >             if next_p is None:
+  >                 return p.next
+  >             for i in range(k - 1):
+  >                 next_p = next_p.next
+  >                 if next_p is None:
+  >                     return p.next
+  >         return p.next
+  > ```
 
 ## **<span id="jump3">3. String</span>**
 
@@ -226,6 +297,40 @@
   > return words
   > ```
 
+- No.30. Substring with Concatenation of All Words, Hard
+
+  > ```python
+  >         words_dict = {}
+  >         word_num = len(words)
+  >         for word in words:
+  >             if word not in words_dict:
+  >                 words_dict[word] = 1
+  >             else:
+  >                 words_dict[word] += 1
+  >         word_len = len(words[0])
+  >         res = []
+  >         for i in range(len(s) + 1 - word_len * word_num):
+  >             curr = {}
+  >             j = 0
+  >             while j < word_num:
+  >                 word = s[i + j * word_len:i + j * word_len + word_len]
+  >                 if word not in words:
+  >                     break
+  >                 if word not in curr:
+  >                     curr[word] = 1
+  >                 else:
+  >                     curr[word] += 1
+  >                 if curr[word] > words_dict[word]: break
+  >                 j += 1
+  >             if j == word_num:
+  >                 res.append(i)
+  >         return res
+  > ```
+  >
+  > 
+
+  
+
 ## 4. <span id="jump4">Sort</span> 
 
   - No.4 Median of Two Sorted Arrays, Hard
@@ -255,3 +360,44 @@
 - No.20 Valid Parentheses, Easy
 
   > use stack
+
+
+
+## 6. <span id="jump6">DFS</span>
+
+- No. 21 Generate Parentheses, Medium
+  > Method one: DFS
+  > ```python
+  >     def dfs(self, res, word, left, right):
+  >         if left == 0 and right == 0:
+  >             res.append(word)
+  > 
+  >         if left > 0 and right >= left:
+  >             self.dfs(res, word + '(', left - 1, right)
+  >         if right > 0 and right - 1 >= left:
+  >             self.dfs(res, word + ')', left, right - 1)
+  > 
+  >     def generateParenthesis(self, n: int) -> List[str]:
+  >         res = []
+  >         self.dfs(res, "", n, n)
+  >         return res
+  > ```
+  > Method two: from itertools import product
+  > ```python
+  >         from itertools import product
+  >         ans = []
+  >         for i in product(['(', ')'], repeat=(n - 1) * 2):  # generate Full Permutation
+  >             temp = ''.join(i)
+  >             count = 0
+  >             for ch in temp:
+  >                 if ch == '(':
+  >                     count += 1
+  >                 else:
+  >                     count -= 1
+  >                 if count < -1:
+  >                     break
+  >             if count == 0:
+  >                 ans.append('(' + ''.join(i) + ')')
+  >         return ans
+  > ```
+
