@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/../../课程资料/映像メディア  done/Deep-Summarization-Network-DSN-Reimplementation-PyTorch/.idea/Deep-Summarization-Network-DSN-Reimplementation-PyTorch.iml" filepath="$PROJECT_DIR$/../../课程资料/映像メディア  done/Deep-Summarization-Network-DSN-Reimplementation-PyTorch/.idea/Deep-Summarization-Network-DSN-Reimplementation-PyTorch.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/leetcode.iml" filepath="$PROJECT_DIR$/.idea/leetcode.iml" />
       <module fileurl="file://$PROJECT_DIR$/../my project/reimplenment-Sum-GAN/.idea/reimplenment-Sum-GAN.iml" filepath="$PROJECT_DIR$/../my project/reimplenment-Sum-GAN/.idea/reimplenment-Sum-GAN.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../my project/self_supervised/.idea/self_supervised.iml" filepath="$PROJECT_DIR$/../my project/self_supervised/.idea/self_supervised.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../my project/self-supervised-video-sum/.idea/self-supervised-video-sum.iml" filepath="$PROJECT_DIR$/../my project/self-supervised-video-sum/.idea/self-supervised-video-sum.iml" />
     </modules>
   </component>
 </project>

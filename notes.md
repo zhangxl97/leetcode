@@ -9,6 +9,9 @@
 3. [String](#jump3)
 4. [Sort](#jump4)
 5. [Stack](#jump5)
+6. [DFS](#jump6)
+7. [DP](#jump7)
+8. [Recursion](#jump8)
 
 ## **<span id="jump1">1. Number Problems</span>**
 
@@ -148,6 +151,35 @@
 
 - No.29. Divide Two Integers, Medium
 
+- No.31. Next Permutation
+
+  > [hint](https://blog.csdn.net/Dby_freedom/article/details/85226270)
+  >
+  > ```python
+  >         left_i = len(nums) - 2
+  >         right_i = len(nums) - 1
+  > 
+  >         # e.g. 2 3 1
+  >         # left_i: 1, right_i: 2
+  >         while left_i >= 0 and nums[left_i] >= nums[left_i + 1]:
+  >             left_i -= 1
+  >         # left_i: 0
+  >         if left_i >= 0:
+  >             # 2 3 1
+  >             while nums[right_i] <= nums[left_i]:
+  >                 right_i -= 1
+  >             nums[left_i], nums[right_i] = nums[right_i], nums[left_i]
+  >         nums[left_i + 1:] = sorted(nums[left_i + 1:])
+  > ```
+
+- No.36. Valid Sudoku, Medium
+
+  > save each number's position, then use set
+
+- No.38. Count and Say, Easy
+
+- 
+
 
 
 ## **<span id="jump2">2. Linked list</span>**
@@ -274,28 +306,7 @@
 
 - No.14 Longest Common Prefix, Easy
 
-- No.17 Letter Combinations of a Phone Number, Medium
 
-  > use ***recursion***
-  >
-  > ```python
-  > kv = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
-  > size = len(digits)
-  > if size == 0:
-  > 	return []
-  > elif size == 1:
-  > 	return [c for c in kv[digits]]
-  > temp = []
-  > for i in range(size):
-  > 	temp.append(kv[digits[i]])
-  > 
-  > words = []
-  > next_words = self.letterCombinations(digits[1:])
-  > for j in temp[0]:
-  > 	for i in next_words:
-  > 		words.append(j + i)
-  > return words
-  > ```
 
 - No.30. Substring with Concatenation of All Words, Hard
 
@@ -355,13 +366,45 @@
 
   > just reverse and verify validity 
 
+- No.33. Search in Rotated Sorted Array, Medium
+
+  > jump redundant numbers
+
+- No.34. Find First and Last Position of Element in Sorted Array, Medium
+
+  > O(logn) mid = (left + right) >> 1
+
+- No.35. Search Insert Position, Easy
+
+  > biscet
+
+
+
 ## 5. <span id="jump5">Stack</span> 
 
 - No.20 Valid Parentheses, Easy
 
   > use stack
 
-
+- No.32. Longest Valid Parentheses, Hard
+  > 解题思路：返回括号串中合法括号串的长度。使用栈。这个解法比较巧妙，开辟一个栈，压栈的不是括号，而是未匹配左括号的索引！
+  > ```python
+  > max_len = 0
+  > stack = []
+  > last = -1
+  > for i in range(len(s)):
+  >     if s[i] == '(':
+  >         stack.append(i)  # push the INDEX into the stack!!!!
+  >     else:
+  >         if stack == []:
+  >             last = i
+  >         else:
+  >             stack.pop()
+  >             if stack == []:
+  >                 max_len = max(max_len, i - last)
+  >             else:
+  >                 max_len = max(max_len, i - stack[-1])
+  > ```
 
 ## 6. <span id="jump6">DFS</span>
 
@@ -400,4 +443,113 @@
   >                 ans.append('(' + ''.join(i) + ')')
   >         return ans
   > ```
+
+- No.37. Sudoku Solver
+
+  > use dfs, validate now and future
+  >
+  > ```python
+  >     def dfs(self, board: List[List[str]]):
+  >         def is_valid(board: List[List[str]]):
+  >             numbers = []
+  >             for i, row in enumerate(board):
+  >                 for j, c in enumerate(row):
+  >                     if c != '.':
+  >                         numbers += [(i, c), (c, j), (i // 3, j // 3, c)]
+  >             return len(set(numbers)) == len(numbers)
+  > 
+  >         for col in range(9):
+  >             for row in range(9):
+  >                 if board[row][col] == '.':
+  >                     for c in "123456789":
+  >                         board[row][col] = c
+  >                         if is_valid(board) and self.dfs(board):
+  >                             return True
+  >                         board[row][col] = '.'
+  >                     return False
+  >         return True
+  > 
+  >     def solveSudoku(self, board: List[List[str]]) -> None:
+  >         self.dfs(board)
+  > ```
+
+- No.17 Letter Combinations of a Phone Number, Medium
+
+  > use ***recursion***
+  >
+  > ```python
+  > kv = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+  > size = len(digits)
+  > if size == 0:
+  > 	return []
+  > elif size == 1:
+  > 	return [c for c in kv[digits]]
+  > temp = []
+  > for i in range(size):
+  > 	temp.append(kv[digits[i]])
+  > 
+  > words = []
+  > next_words = self.letterCombinations(digits[1:])
+  > for j in temp[0]:
+  > 	for i in next_words:
+  > 		words.append(j + i)
+  > return words
+  > ```
+
+- No.39. Combination Sum, Medium
+
+  > can repeatedly use. Recursion
+  >
+  > ```python
+  > def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+  >     res = []
+  > 
+  >     def dfs(set, target, idx):
+  >         if target == 0:
+  >             res.append(set)
+  >             return
+  >         for i in range(idx, len(candidates)):
+  >             if candidates[i] <= target:
+  >                 dfs(set + [candidates[i]], target - candidates[i], i)
+  > 
+  >     dfs([], target, 0)
+  > 
+  >     return res
+  > ```
+
+- No.40. Combination Sum, Medium
+
+  > cannot repeatedly use
+  >
+  > dfs(set + [candidates[i]], target - candidates[i], i)  --> dfs(set + [candidates[i]], target - candidates[i], i+1)
+
+
+
+## **<span id="jump7">7. DP</span>**
+
+> Max problem
+
+- No.32. Longest Valid Parentheses,  Hard
+
+  > [hint](https://blog.csdn.net/qqxx6661/article/details/77876647)
+  >
+  > e.g. "（( ) ( ))": [0 0 2 0 4 6]
+  >
+  > ```python
+  > size = len(s)
+  > if size < 2:
+  >     return 0
+  > dp = [0 for _ in range(size)]
+  > for i in range(1, size):
+  >     if s[i] == ')':
+  >         j = i - 1 - dp[i - 1]   # 直接去查找前面的第j位移过了dp[i-1]位已经匹配的
+  >         if j >= 0 and s[j] == '(':  # 如果那位是‘（’则可以总数多+2
+  >             dp[i] = dp[i - 1] + 2
+  >             if j - 1 >= 0:
+  >                 dp[i] += dp[j - 1]  # 重点，会把这次匹配之前的加进去，例如（）（（））
+  > return max(dp)
+  > ```
+
+## **<span id="jump8">8. Recursion</span>**
+- 
 
