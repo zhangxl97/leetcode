@@ -12,7 +12,7 @@
 6. [DFS](#jump6)
 7. [DP](#jump7)
 
-## **<span id="jump1">1. Number Problems</span>**
+## **<span id="jump1">1 Number Problems</span>**
 
 - No.1  Two Sum, Easy
 
@@ -30,7 +30,7 @@
   >
   >compare the height of these two lines --> left is lower, move left, if not, move right
 
-- No.12. Integer to Roman, Medium and No.13 Roman to Integer,  Easy
+- No.12 Integer to Roman, Medium and No.13 Roman to Integer,  Easy
 
   > compare with each base
 
@@ -98,7 +98,7 @@
 
   > use ***two pointer***
 
-- No.18. 4Sum
+- No.18 4Sum
 
   > use two pointer --> O(n^3)
   >
@@ -136,21 +136,21 @@
   > ```
   >
 
-- No.26. Remove Duplicates from Sorted Array, Easy
+- No.26 Remove Duplicates from Sorted Array, Easy
 
-  > Remove duplicates "in-place". It's easy. By Python, we can use set().
+  > Remove duplicates "in-place" It's easy By Python, we can use set().
 
-- No.27. Remove Element, Easy
+- No.27 Remove Element, Easy
 
   > "in-place" --> nums.count(val) and nums.remove(val)
 
-- No.28. Implement strStr(), Easy
+- No.28 Implement strStr(), Easy
 
   > str.find() --> KMP algorithm, BM algorithm, Sunday...
 
-- No.29. Divide Two Integers, Medium
+- No.29 Divide Two Integers, Medium
 
-- No.31. Next Permutation
+- No.31 Next Permutation
 
   > [hint](https://blog.csdn.net/Dby_freedom/article/details/85226270)
   >
@@ -158,7 +158,7 @@
   >         left_i = len(nums) - 2
   >         right_i = len(nums) - 1
   > 
-  >         # e.g. 2 3 1
+  >         # e.g 2 3 1
   >         # left_i: 1, right_i: 2
   >         while left_i >= 0 and nums[left_i] >= nums[left_i + 1]:
   >             left_i -= 1
@@ -171,13 +171,13 @@
   >         nums[left_i + 1:] = sorted(nums[left_i + 1:])
   > ```
 
-- No.36. Valid Sudoku, Medium
+- No.36 Valid Sudoku, Medium
 
   > save each number's position, then use set
 
-- No.38. Count and Say, Easy
+- No.38 Count and Say, Easy
 
-- No.41. First Missing Positive, Hard
+- No.41 First Missing Positive, Hard
 
   > ```python
   > if not nums:
@@ -192,7 +192,7 @@
   >         return i
   >    ```
 
-- No.42. Trapping Rain Water, Hard
+- No.42 Trapping Rain Water, Hard
 
   > ```python
   > # min(max left, max right) - hight[i]
@@ -268,7 +268,7 @@
   >
   > ​    \# by using the minimum steps "ret", whereas "curr" is the maximum distance
   >
-  > ​    \# that can be reached by using "ret+1" steps. Thus,curr = max(i+A[i]) where 0 <= i <= last.
+  > ​    \# that can be reached by using "ret+1" steps Thus,curr = max(i+A[i]) where 0 <= i <= last.
   >
   > ```python
   >         ret = 0
@@ -326,31 +326,114 @@
   >         return ans
   > ```
 
+- No.54 Spiral Matrix， Medium
+
+  > ```python
+  > # very slow, but save memory
+  > # Runtime: 80 ms, faster than 6.46% Memory Usage: 29.9 MB, less than 100.00% 
+  >     if matrix == [] or matrix == [[]]:
+  >         return []
+  >     elif len(matrix) == 1:
+  >         return matrix[0]
+  >     import numpy as np
+  >     matrix = np.array(matrix)
+  >     row, col = matrix.shape
+  >     up, down, left, right = 0, row - 1, 0, col - 1
+  >     res = []
+  >     while up <= down and left <= right:
+  >         res.extend(matrix[up, left : right + 1])
+  >         res.extend(matrix[up + 1 : down + 1, right])
+  >         if down > up:
+  >             res.extend(matrix[down, left : right][::-1])
+  >         if right > left:
+  >             res.extend(matrix[up + 1 : down, left][::-1])
+  >         up += 1
+  >         down -= 1
+  >         left += 1
+  >         right -= 1
+  >     return res
+  > ```
+  >
+  > ```python
+  > # rotate the matrix every time
+  > 	def rotate(m):
+  >         # zip(*m)将其转换为按列对应的迭代器
+  >         # map()根据提供的函数对指定序列做映射，python3返回迭代器
+  >         m = list(map(list, zip(*m)))  # ==> 转置操作！！！
+  >         m.reverse()   # 上下颠倒，类似np.flipud()
+  >         return m
+  > 
+  >     res = []
+  >     while matrix:
+  >         res += matrix[0]
+  >         matrix = rotate(matrix[1:])
+  >     return res
+  > ```
+- No 56 Merge Intervals, Medium
+  > ```python
+  >      intervals.sort()
+  >      size = len(intervals)
+  >      if size <= 1:
+  >          return intervals
+  >      ans = []
+  >      start_pre, end_pre = intervals[0]
+  >      for i in range(1, size):
+  >          start, end = intervals[i]
+  >          if start <= end_pre:
+  >              end_pre = max(end, end_pre)
+  >          else:
+  >              ans.append([start_pre, end_pre])
+  >              start_pre = start
+  >              end_pre = end
+  >      ans.append([start_pre, end_pre])
+  >      return ans
+  > ```
+  
+
+- No.59 Spiral Matrix II, Medium
+
+- No.60 Permutation Sequence, Hard
+
+  > ```python
+  >     # faster than just use itertools.permutations()
+  >     res = ''
+  >     digits = [str(i + 1) for i in range(n)]
+  >     t = k - 1
+  >     for i in range(n, 0, -1):
+  >         ind = t//math.factorial(i - 1)
+  >         t%=math.factorial(i - 1)
+  >         if t == 0:
+  >             res += digits[ind] + "".join(digits[:ind] + digits[ind + 1:])
+  >             return res
+  >         else:
+  >             res += digits[ind]
+  >             del digits[ind]
+  >     return res
+  > ```
 
 
 
+## **<span id="jump2">2 Linked list</span>**
 
-## **<span id="jump2">2. Linked list</span>**
-
-  - No. 2  Add Two Numbers, Medium
+  - No.2  Add Two Numbers, Medium
 
     > ***divide and conquer***
 
-- No.19. Remove Nth Node From End of List, Medium
+- No.19 Remove Nth Node From End of List, Medium
 
   > count the length and remove
 
-- No.21. Merge Two Sorted Lists,  Easy
+- No.21 Merge Two Sorted Lists,  Easy
 
-- No.23. Merge k Sorted Lists, Hard
+- No.23 Merge k Sorted Lists, Hard
 
   > connect all values , sort them,  and generate  ListNode
 
-- No.24. Swap Nodes in Pairs, Medium
+- No.24 Swap Nodes in Pairs, Medium
 
   > understand the movement of pointers
 
-- No.25. Reverse Nodes in k-Group, Hard
+- No.25 Reverse Nodes in k-Group, Hard
 
   > ```python
   >         if k == 1:
@@ -396,7 +479,7 @@
   >         return p.next
   > ```
 
-## **<span id="jump3">3. String</span>**
+## **<span id="jump3">3 String</span>**
 
   - No.3  Longest Substring Without Repeating Characters, Medium
     > change start position while comparing the length of substring
@@ -456,7 +539,7 @@
 
 
 
-- No.30. Substring with Concatenation of All Words, Hard
+- No.30 Substring with Concatenation of All Words, Hard
 
   > ```python
   >         words_dict = {}
@@ -487,14 +570,14 @@
   > ```
   >
   
-- No.43. Multiply Strings, Medium
-- 
+- No.43 Multiply Strings, Medium
+- No.58 Length of Last Word, Easy
 
 
 
 
 
-## 4. <span id="jump4">Sort</span> 
+## 4 <span id="jump4">Sort</span> 
 
   - No.4 Median of Two Sorted Arrays, Hard
 
@@ -518,27 +601,27 @@
 
   > just reverse and verify validity 
 
-- No.33. Search in Rotated Sorted Array, Medium
+- No.33 Search in Rotated Sorted Array, Medium
 
   > jump redundant numbers
 
-- No.34. Find First and Last Position of Element in Sorted Array, Medium
+- No.34 Find First and Last Position of Element in Sorted Array, Medium
 
   > O(logn) mid = (left + right) >> 1
 
-- No.35. Search Insert Position, Easy
+- No.35 Search Insert Position, Easy
 
   > biscet
 
 
 
-## 5. <span id="jump5">Stack</span> 
+## 5 <span id="jump5">Stack</span> 
 
 - No.20 Valid Parentheses, Easy
 
   > use stack
 
-- No.32. Longest Valid Parentheses, Hard
+- No.32 Longest Valid Parentheses, Hard
   > 解题思路：返回括号串中合法括号串的长度。使用栈。这个解法比较巧妙，开辟一个栈，压栈的不是括号，而是未匹配左括号的索引！
   > ```python
   > max_len = 0
@@ -558,9 +641,9 @@
   >                 max_len = max(max_len, i - stack[-1])
   > ```
 
-## 6. <span id="jump6">DFS</span>
+## 6 <span id="jump6">DFS</span>
 
-- No. 21 Generate Parentheses, Medium
+- No 21 Generate Parentheses, Medium
   > Method one: DFS
   > ```python
   >     def dfs(self, res, word, left, right):
@@ -596,7 +679,7 @@
   >         return ans
   > ```
 
-- No.37. Sudoku Solver
+- No.37 Sudoku Solver
 
   > use dfs, validate now and future
   >
@@ -648,9 +731,9 @@
   > return words
   > ```
 
-- No.39. Combination Sum, Medium
+- No.39 Combination Sum, Medium
 
-  > can repeatedly use. Recursion
+  > can repeatedly use Recursion
   >
   > ```python
   > def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
@@ -669,7 +752,7 @@
   >     return res
   > ```
 
-- No.40. Combination Sum, Medium
+- No.40 Combination Sum, Medium
 
   > cannot repeatedly use
   >
@@ -701,19 +784,60 @@
   >         return out
   > ```
   
-  
+- No.51 N-Queens, Hard
+
+  >  create four dictionary to save the flag whether it can put a Queen there.
+  >
+  > ```python
+  >         if n == 1:
+  >             return [["Q"]]
+  >         elif n == 2:
+  >             return []
+  >         from collections import defaultdict
+  >         board = [['.' for j in range(n)] for i in range(n)]
+  >         rows = defaultdict(bool)
+  >         cols = defaultdict(bool)
+  >         diag1 = defaultdict(bool)  # rightup2leftdown
+  >         diag2 = defaultdict(bool)  # leftup2rightdown
+  > 
+  >         def available(x, y):
+  >             return not rows[x] and not cols[y] and not diag1[x+y] and not diag2[x-y]
+  >         
+  >         def update(x, y, flag):
+  >             rows[x] = flag
+  >             cols[y] = flag
+  >             diag1[x+y] = flag
+  >             diag2[x-y] = flag
+  >             board[x][y] = 'Q' if flag==True else '.'
+  >         
+  >         def dfs(x):
+  >             if x == n:
+  >                 res.append([''.join(lst) for lst in board])
+  >                 return
+  >             for y in range(n):
+  >                 if available(x , y):
+  >                     update(x, y, True)
+  >                     dfs(x+1)
+  >                     update(x, y, False)       
+  >                     
+  >         res = []
+  >         dfs(0)
+  >         return res
+  > ```
+  >
+  > 
 
 
 
-## **<span id="jump7">7. DP</span>**
+## **<span id="jump7">7 DP</span>**
 
 > Max problem
 
-- No.32. Longest Valid Parentheses,  Hard
+- No.32 Longest Valid Parentheses,  Hard
 
   > [hint](https://blog.csdn.net/qqxx6661/article/details/77876647)
   >
-  > e.g. "（( ) ( ))": [0 0 2 0 4 6]
+  > e.g "（( ) ( ))": [0 0 2 0 4 6]
   >
   > ```python
   > size = len(s)
@@ -796,7 +920,7 @@
   >         for j in range(1, n + 1):
   >             T[0][j] = False
   > 
-  >         # (3) For T[i][0] = True, p must be '*', '**', '***', etc. 
+  >         # (3) For T[i][0] = True, p must be '*', '**', '***', etc 
   >         #     Once p[i-1] != '*', all the T[i][0] afterwards will be False
   >         for i in range(1, m + 1):
   >             if p[i-1] == '*':
@@ -828,5 +952,23 @@
   >     
   > ```
   >
-  > 
+  
+- No 53 Maximum Subarray, Easy
 
+  > ```python
+  >     # dp save the max num which can be got until i-th number.
+  >     # T = O(n), M = O(n)
+  >     dp = [0]*len(nums)
+  >     for i,num in enumerate(nums):            
+  >         dp[i] = max(dp[i-1] + num, num)
+  >     return max(dp)
+  > 	
+  >     # not dp, T=O(n), M=O(1)
+  >     max_sum_until_i = max_sum= nums[0]
+  >     for num in nums[1:]:
+  >         max_sum_until_i = max(max_sum_until_i+num, num)
+  >         max_sum = max(max_sum, max_sum_until_i)
+  >         return max_sum
+  > ```
+  >
+  > 

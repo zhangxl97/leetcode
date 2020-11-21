@@ -200,6 +200,7 @@ class Solution:
         # We use "last" to keep track of the maximum distance that has been reached
         # by using the minimum steps "ret", whereas "curr" is the maximum distance
         # that can be reached by using "ret+1" steps. Thus,curr = max(i+A[i]) where 0 <= i <= last.
+        # e.g. [2,3,1,1,4]
         ret = 0
         last = 0
         curr = 0
@@ -307,7 +308,7 @@ def main():
     #     "**aa*****ba*a*bb**aa*ab****a*aaaaaa***a*aaaa**bbabb*b*b**aaaaaaaaa*a********ba*bbb***a*ba*bb*bb**a*b*bb"))
     # print(s.isMatch("aa", "*a"))
     # 45
-    # print(s.jump([2,3,1,1,4]))
+    print(s.jump([2,3,1,1,4]))
     # 46
     # print(s.permute([1,2,3]))
     # 47
@@ -320,7 +321,7 @@ def main():
     # 49
     # print(s.groupAnagrams(["eat","tea","tan","ate","nat","bat","ac","bd","aac","bbd","aacc","bbdd","acc","bdd"]))
     # 50
-    print(s.myPow(2.00000, 5))
+    # print(s.myPow(2.00000, 5))
 
 if __name__ == '__main__':
     main()
