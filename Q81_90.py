@@ -1,6 +1,6 @@
 from typing import List
 from tabulate import tabulate
-from sigly_linked_list import ListNode, print_nodes, connect_nodes
+from singly_linked_list import ListNode, print_nodes, connect_nodes
 
 
 class Solution:
