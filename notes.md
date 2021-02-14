@@ -1,16 +1,16 @@
 # Notes
 
-## Index
+## 0 Index
 
 > Github: https://github.com/zhangxl97/leetcode.git
 
 1. [Number Problems](#jump1)
 2. [Linked list](#jump2)
 3. [String](#jump3)
-4. [Sort](#jump4)
-5. [Stack](#jump5)
-6. [DFS](#jump6)
-7. [DP](#jump7)
+5. [Stack](#jump4)
+6. [DFS](#jump5)
+7. [DP](#jump6)
+7. [Tree](#jump7)
 
 ## **<span id="jump1">1 Number Problems</span>**
 
@@ -19,6 +19,11 @@
   > confirm whether target - n is in the rest list
   >
   > use dictionary
+
+- No.4 Median of Two Sorted Arrays, Hard
+  > 1. converge into one array
+  > 2. use two index (i, j) to save location which is being compared
+
 
 - No.9  Palindrome Number, Easy
 
@@ -170,7 +175,41 @@
   >             nums[left_i], nums[right_i] = nums[right_i], nums[left_i]
   >         nums[left_i + 1:] = sorted(nums[left_i + 1:])
   > ```
+  
+- No.33 Search in Rotated Sorted Array, Medium
 
+  > jump redundant numbers
+  >
+  > ```python
+  >         l, r = 0, len(nums) - 1
+  >         
+  >         while l <= r:
+  >             mid = (l + r) // 2
+  >             if target == nums[mid]:
+  >                 return mid
+  >             # nums[left to mid] is sorted 
+  >             if nums[l] <= nums[mid]:
+  >                 if target > nums[mid] or target < nums[l]:
+  >                     l = mid + 1
+  >                 else:
+  >                     r = mid - 1
+  >             # nums[mid to right] is sorted
+  >             else:
+  >                 if target < nums[mid] or target > nums[r]:
+  >                     r = mid - 1
+  >                 else:
+  >                     l = mid + 1
+  >         return -1
+  > ```
+
+- No.34 Find First and Last Position of Element in Sorted Array, Medium
+
+  > O(logn) mid = (left + right) >> 1
+
+- No.35 Search Insert Position, Easy
+
+  > biscet
+  
 - No.36 Valid Sudoku, Medium
 
   > save each number's position, then use set
@@ -304,7 +343,7 @@
 
 - No.50 Pow(x, n), Medium
 
-  > ```pyhton
+  > ```python
   >         if n < 0:
   >             x = 1 / x
   >             n = -n
@@ -369,6 +408,7 @@
   >         matrix = rotate(matrix[1:])
   >     return res
   > ```
+  
 - No 56 Merge Intervals, Medium
   > ```python
   >      intervals.sort()
@@ -389,7 +429,6 @@
   >      return ans
   > ```
   
-
 - No.59 Spiral Matrix II, Medium
 
 - No.60 Permutation Sequence, Hard
@@ -410,6 +449,64 @@
   >             del digits[ind]
   >     return res
   > ```
+
+- No.66 Plus One, Easy
+
+- No.67 Add Binary, Easy
+
+- No.69 Sqrt(x), Easy
+
+- No.73 Set Matrix Zeroes, Medium
+
+- No.74 Search a 2D Matrix, Medium
+
+- No.80 Remove Duplicates from Sorted Array II, Medium
+
+- No.81. Search in Rotated Sorted Array II, Medium
+
+- No.84 Largest Rectangle in Histogram, Hard
+
+  > tips: [博客（贴的代码有点问题，思路对的）](https://www.cnblogs.com/grandyang/p/4322653.html)
+  >
+  > ```python
+  >         # O(N) 妙啊
+  >     	res, stack = 0, []
+  >         for j, x in enumerate(heights):
+  >             i = j
+  >             while stack and x <= stack[-1][1]:
+  >                 i, y = stack.pop()
+  >                 res = max(res, (j - i) * y)
+  >             stack.append((i, x))
+  >         while stack:
+  >             i, y = stack.pop()
+  >             res = max(res, (len(heights) - i) *y)
+  >         return res
+  > ```
+  >
+
+- No.85 Maximal Rectangle, Hard
+
+  > 这道题的解法灵感来自于Largest Rectangle in Histogram这道题，假设我们把矩阵沿着某一行切下来，然后把切的行作为底面，将自底面往上的矩阵看成一个直方图（histogram）。直方图的中每个项的高度就是从底面行开始往上连续的1的数量。（如果该底层以0开始，那么这个直方图对应的值为0）根据Largest Rectangle in Histogram中的largestRectangleArea函数我们就可以求出当前行作为矩阵下边缘的一个最大矩阵。接下来如果对每一行都做一次Largest Rectangle in Histogram，从其中选出最大的矩阵，那么它就是整个矩阵中面积最大的子矩阵。算法时间复杂度为O(m*n)，
+  >
+  > ```python
+  > if  matrix == [] or len(matrix) ==0:
+  >     return 0
+  > maxArea = 0
+  > heights = [0 for i in range(len(matrix[0]))]
+  > 
+  > for i in range(len(matrix)):
+  >     for j in range(len(matrix[i])):
+  >         heights[j] = heights[j] + 1 if matrix[i][j] == '1' else 0 #计算高度值
+  >     maxArea = max(maxArea,self.largestRectangleArea(heights))
+  > return maxArea  
+  > ```
+  >
+
+- No.88 Merge Sorted Array, Easy
+
+- No.89 Gray code, Medium
+
+- No.90 Subsets II, Medium
 
 
 
@@ -478,6 +575,18 @@
   >                     return p.next
   >         return p.next
   > ```
+  
+- No.61 Rotate list, Medium
+
+- No.82 Remove Duplicates from Sorted List II, Medium3
+
+- No.83 Remove Duplicates from Sorted List, Easy
+
+- No.86 Partition List, Medium
+
+- No.92 Reverse Linked List II, Medium
+
+
 
 ## **<span id="jump3">3 String</span>**
 
@@ -526,7 +635,22 @@
             else:
                 return s[start_even: start_even + max_even]
     ```
+- No.6 ZigZag Conversion Medium
 
+  > ZigZag "PAYPALISHIRING", numRows=3 
+  >
+  > --> P      A     H     N  
+  > 
+  >       A  P  L  S  I   I   G  
+  >    
+  >       Y       I      R  
+  > --> "PAHNAPLSIIGYIR"
+  > -->row_id:  [0,1,2,1,0,1,2,1,0...]	
+  > hint: import itertools
+
+- No.7 Reverse Integer Easy
+
+  > just reverse and verify validity 
 - No.8 String to Integer (atoi), Medium
 
   > very easy to use regex
@@ -573,49 +697,128 @@
 - No.43 Multiply Strings, Medium
 - No.58 Length of Last Word, Easy
 
+- No.65 Valid Number, Hard
 
+- No.68 Text Justification, Hard
 
-
-
-## 4 <span id="jump4">Sort</span> 
-
-  - No.4 Median of Two Sorted Arrays, Hard
-
-    > 1. converge into one array
-    > 2. use two index (i, j) to save location which is being compared
-
-- No.6 ZigZag Conversion Medium
-
-  > ZigZag "PAYPALISHIRING", numRows=3 
-  >
-  > --> P      A     H     N  
+  > ```python
+  >         size = len(words)
+  >         lengths = [len(words[i]) for i in range(size)]
+  >         if size == 1:
+  >             return [words[0].ljust(maxWidth)]
+  >         index = 0
+  >         res = []
+  >         while index < size:
+  >             word = ""
+  >             num_of_word = 0
+  >             if index == size - 1:
+  >                 num_of_word = 1
+  >                 index += 1
+  >             else:
+  >                 length_tmp = len(words[index])
+  >                 length = length_tmp
+  >                 # word += words[index]
+  >                 num_of_word += 1
+  >                 while index < size:
+  >                     index += 1
+  >                     if index == size:
+  >                         break
   > 
-  >       A  P  L  S  I   I   G  
-  >    
-  >       Y       I      R  
-  > --> "PAHNAPLSIIGYIR"
-  > -->row_id:  [0,1,2,1,0,1,2,1,0...]	
-  > hint: import itertools
+  >                     length_tmp = len(words[index])
+  >                     length = length + 1 + length_tmp
+  >                     if length <= maxWidth:
+  >                         num_of_word += 1
+  >                     else:
+  >                         break
+  >                         
+  >             if index == size:
+  >                 word = words[index - num_of_word]
+  >                 for i in range(index - num_of_word + 1, index):
+  >                     word += " " + words[i]
+  >                 word = word.ljust(maxWidth)
+  >             else:
+  >                 length_of_word = sum(lengths[index - num_of_word: index])
+  >                 length_of_blank = maxWidth - length_of_word
+  >                 if num_of_word == 1:
+  >                     word = words[index - num_of_word].ljust(maxWidth)
+  >                     
+  >                 else:
+  >                     word = words[index - num_of_word]
+  >                     for i in range(index - num_of_word + 1, index):
+  >                         if length_of_blank % (num_of_word - 1) == 0:
+  >                             blank = length_of_blank // (num_of_word - 1)
+  >                             length_of_blank -= blank
+  >                             num_of_word -= 1
+  >                         else:
+  >                             blank = length_of_blank // (num_of_word - 1) + 1
+  >                             length_of_blank -= blank
+  >                             num_of_word -= 1
+  >                         word += " " * blank + words[i]
+  > 
+  >             res.append(word)
+  > 
+  >         return res
+  > ```
+  >
 
-- No.7 Reverse Integer Easy
+- No.71 Simplify Path, Medium
 
-  > just reverse and verify validity 
+- No.76 Minimum Window Substring, Hard
 
-- No.33 Search in Rotated Sorted Array, Medium
+  > ```python
+  >         from collections import Counter
+  >         count_t = Counter(t)
+  > 
+  >         start = 0
+  >         cnt = 0
+  >         res = ""
+  >         min_len = float("inf")
+  >         for i, c in enumerate(s):
+  >             count_t[c] -= 1
+  >             if count_t[c] >= 0:
+  >                 cnt += 1
+  > 
+  >             while cnt == len(t):
+  >                 if i - start + 1 < min_len:
+  >                     min_len = i - start + 1
+  >                     res = s[start: start + min_len]
+  >                 count_t[s[start]] += 1
+  >                 if count_t[s[start]] > 0:
+  >                     cnt -= 1
+  >                 start += 1
+  > 
+  >         return res
+  > ```
 
-  > jump redundant numbers
+- No.91 Decode Ways, Medium
 
-- No.34 Find First and Last Position of Element in Sorted Array, Medium
+  > ```python
+  > size = len(s)
+  > if size == 1:
+  >     return 1 if s != "0" else 0
+  > if s[0] == "0":
+  >     return 0
+  > dp = [0 for _ in range(size + 1)]
+  > dp[0] = 1
+  > 
+  > for i in range(1, size + 1):
+  >     if s[i - 1] == "0":
+  >         dp[i] = 0
+  >     else:
+  >         dp[i] = dp[i - 1]
+  >     
+  >     if i >= 2 and 10 <= int(s[i - 2: i]) <= 26:
+  >         dp[i] += dp[i - 2]
+  > 
+  > print(dp)
+  > return dp[-1]
+  > ```
+  >
+  > 
 
-  > O(logn) mid = (left + right) >> 1
-
-- No.35 Search Insert Position, Easy
-
-  > biscet
 
 
-
-## 5 <span id="jump5">Stack</span> 
+## 4 <span id="jump4">Stack</span> 
 
 - No.20 Valid Parentheses, Easy
 
@@ -641,7 +844,7 @@
   >                 max_len = max(max_len, i - stack[-1])
   > ```
 
-## 6 <span id="jump6">DFS</span>
+## 5 <span id="jump5">DFS</span>
 
 - No 21 Generate Parentheses, Medium
   > Method one: DFS
@@ -713,22 +916,23 @@
   > use ***recursion***
   >
   > ```python
-  > kv = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
-  > size = len(digits)
-  > if size == 0:
-  > 	return []
-  > elif size == 1:
-  > 	return [c for c in kv[digits]]
-  > temp = []
-  > for i in range(size):
-  > 	temp.append(kv[digits[i]])
+  > def letterCombinations(self, digits: str) -> List[str]:
+  >     kv = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+  >     size = len(digits)
+  >     if size == 0:
+  >         return []
+  >     elif size == 1:
+  >         return [c for c in kv[digits]]
+  >     temp = []
+  >     for i in range(size):
+  >         temp.append(kv[digits[i]])
   > 
-  > words = []
-  > next_words = self.letterCombinations(digits[1:])
-  > for j in temp[0]:
-  > 	for i in next_words:
-  > 		words.append(j + i)
-  > return words
+  >     words = []
+  >     next_words = self.letterCombinations(digits[1:])
+  >     for j in temp[0]:
+  >         for i in next_words:
+  >             words.append(j + i)
+  >     return words
   > ```
 
 - No.39 Combination Sum, Medium
@@ -825,11 +1029,100 @@
   >         return res
   > ```
   >
+
+- No.77 Combinations Medium
+
+  > ```python
+  > # use dfs or package combination
+  > from itertools import combination
+  > return list(combinations(range(1, n+1), k))
+  > ```
+
+- No.78 Subsets, Medium
+
+  > ```python
+  >         # use combination 36ms
+  >         # from itertools import combinations
+  >         # size = len(nums)
+  >         # if nums == 1:
+  >         #     return [[], nums]
+  >         
+  >         # res = [[]]
+  >         # for i in range(1, size + 1):
+  >         #     res.extend(combinations(nums, i))
+  >         # # print(res)
+  >         # return res
   > 
+  >         # dfs 28ms
+  >         # def dfs(nums, index, path ,res):
+  >         #     res.append(list(path))
+  >             
+  >         #     for i in range(index, len(nums)):
+  >         #         dfs(nums, i+1, path+[nums[i]], res)
+  >         # nums.sort()
+  >         # res = []
+  >         # dfs(nums, 0, [], res)
+  >         # return res         
+  >         
+  >         # bfs
+  >         if len(nums) == 1:
+  >             return [[], nums]
+  >         
+  >         
+  >         stack = [[[], 0]]
+  >         ans = []
+  >         
+  >         while stack:
+  >             arr, l = stack.pop()
+  >             ans.append(arr)
+  >             for i in range(l, len(nums)):
+  >                 stack.append([arr + [nums[i]], i+1])
+  >         return ans
+  > ```
+  >
+
+- No.93 Restore IP Addresses， Medium
+
+  > ```python
+  >         size = len(s)
+  >         if size <= 3:
+  >             return []
+  >         elif size == 4:
+  >             return [".".join(list(s))]
+  >         
+  > 
+  >         def helper(length, s, ips, result):
+  >             if not s:
+  >                 if length == 4:
+  >                     result.append('.'.join(ips))  # 以.分隔作为字符串返回
+  >                 return
+  >             if length == 4:  # 分了4段，结束
+  >                 return
+  > 
+  >             # 取一位
+  >             helper(length + 1, s[1:], ips + [s[:1]], result)
+  > 
+  >             # 若要取2位及以上，要确保目前的第一位不能为0
+  >             if s[0] != '0':  
+  >                 if len(s) >= 2:
+  >                     helper(length + 1, s[2:], ips + [s[:2]], result)
+  >                 if len(s) >= 3 and int(s[:3]) <= 255: # 若要取3位，则要保证小于255
+  >                     helper(length + 1, s[3:], ips + [s[:3]], result)    
+  > 
+  >         result = []
+  >         helper(0, s, [], result)
+  >         return result
+  > ```
 
 
 
-## **<span id="jump7">7 DP</span>**
+
+
+
+
+
+
+## **<span id="jump6">6 DP</span>**
 
 > Max problem
 
@@ -969,6 +1262,193 @@
   >         max_sum_until_i = max(max_sum_until_i+num, num)
   >         max_sum = max(max_sum, max_sum_until_i)
   >         return max_sum
+  > ```
+  >
+
+- No.62 Unique Paths
+
+  > ```python
+  >         if m == 1 or n == 1:
+  >             return 1
+  >         # DFS time limited
+  >         # self.cnt = 0
+  >         # def search(x, y):
+  >         #     if x == m and y == n:
+  >         #         self.cnt += 1
+  >         #         return 
+  >         #     if x < m:
+  >         #         search(x + 1, y)
+  >         #     if y < n:
+  >         #         search(x, y + 1)
+  >         # search(1, 1)
+  >         # return self.cnt
+  >         dp = [[1 for _ in range(n)] for _ in range(m)]
+  >         for i in range(1, m):
+  >             for j in range(1, n):
+  >                 dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+  >         return dp[m - 1][n - 1]
+  > ```
+
+- No.63 Unique Paths II
+
+- No.64 Minimum Path Sum
+
+- No.70 Climbing Stairs, Easy
+
+- No.72 Edit Distance, Hard
+
+  > ```python
+  > 		len_1 = len(word1)
+  >         len_2 = len(word2)
+  >         if len_1 == 0:
+  >             return len_2
+  >         elif len_2 == 0:
+  >             return len_1
+  > 
+  >         dp = [[0 for _ in range(len_1 + 1)] for _ in range(len_2 + 1)]
+  > 
+  >         for i in range(1, len_2 + 1):
+  >             dp[i][0] = i
+  >         for j in range(1, len_1 + 1):
+  >             dp[0][j] = j
+  >         
+  >         for i in range(1, len_2 + 1):
+  >             for j in range(1, len_1 + 1):
+  >                 dp[i][j] = min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (word1[j - 1] != word2[i - 1]))
+  >         
+  >         return dp[-1][-1]
+  > ```
+
+- No.79 Word Search, Medium
+
+  > ```
+  >         def dfs(x, y, index, visited, size_w, rows, cols):
+  >             if index == size_w:
+  >                 return True
+  >             if x < 0 or y < 0 or x >= rows or y >= cols or visited[x][y] or board[x][y] != word[index]:
+  >                  return False
+  > 
+  >             visited[x][y] = True
+  >             res = dfs(x + 1, y, index + 1, visited, size_w, rows, cols) or dfs(x, y + 1, index + 1, visited, size_w, rows, cols) or dfs(x - 1, y, index + 1, visited, size_w, rows, cols) or dfs(x, y - 1, index + 1, visited, size_w, rows, cols)
+  > 
+  >             visited[x][y] = False
+  >             return res
+  > 
+  >         rows = len(board)
+  >         if rows == 0:
+  >             return False
+  >         cols = len(board[0])
+  >         size_w = len(word)
+  >         if size_w == 0:
+  >             return True
+  >         visited = [[False for _ in range(cols)] for _ in range(rows)]
+  > 
+  >         for x in range(rows):
+  >             for y in range(cols):
+  >                 if dfs(x, y, 0, visited, size_w, rows, cols):
+  >                     return True
+  > 
+  >         return False
+  > ```
+
+- No.97 Interleaving String, Hard
+
+  > 使用dp数组表示是否能连接到当前位置，由于是在矩阵中进行，|n-m|必定小于等于1。n，m为分割成的个数，即连线中横着和竖着的线个数
+  >
+  > ```python
+  > l1, l2, l3 = len(s1), len(s2), len(s3)
+  > if l1 + l2 != l3:
+  >     return False
+  > 
+  > dp = [[False for _ in range(l2 + 1)] for _ in range(l1 + 1)]
+  > 
+  > for i1 in range(l1 + 1):
+  >     for i2 in range(l2 + 1):
+  >         if i1 == 0 and i2 == 0:
+  >             dp[i1][i2] = True
+  >         elif i1 == 0:
+  >             dp[0][i2] = dp[0][i2 - 1] and s3[i2 - 1] == s2[i2 - 1]
+  >         elif i2 == 0:
+  >             dp[i1][0] = dp[i1 - 1][0] and s3[i1 - 1] == s1[i1 - 1]
+  >         else:
+  >             dp[i1][i2] = (dp[i1][i2 - 1] is True and s3[i1 + i2 - 1] == s2[i2 - 1]) or (dp[i1 - 1][i2] is True and s3[i1 + i2 -1] == s1[i1 - 1])
+  > # print(tabulate(dp))
+  > return dp[-1][-1]
+  > ```
+
+
+
+
+
+## **<span id="jump7"> 7 Tree</span>**
+
+- No.94 Binary Tree Inorder Traversal, Medium
+
+  ```python
+  if root:
+      helper(root.left, ans)
+      ans.append(root.val)
+      helper(root.right, ans)
+  ```
+
+- No.95 Unique Binary Search Trees II, Medium
+
+  > 二分搜索树： 若它的左子树不为空，左子树上所有节点的值都小于它的根节点。 若它的右子树不为空，右子树上所有的节点的值都大于它的根节点。
+
+- No.96 Unique Binary Search Trees, Medium
+
+  > 用dp:  以i为根，分别以[1,i-1],[i+1,n]为左右子树构造。 左右子树的节点个数分别从0变化至n-1，便能通过动态规划使用由n-1计算出的个数计算得出
+  >
+  > ```python
+  > if n == 1:
+  >     return 1
+  > dp = [0 for _ in range(n+1)]
+  > dp[0] = 1
+  > dp[1] = 1
+  > for i in range(2, n+1):
+  >     for j in range(0, i):
+  >         dp[i] += dp[j] * dp[i - j - 1]
+  > return dp[n]
+  > ```
+
+- No.98 Validate Binary Search Tree, Medium
+
+  > 方法一：判断中序遍历是否为递增，且没有重复
+  >
+  > 方法二：如果左子树的值小于根的值并且右子树的值大于根的值，并进行递归，成立则为二叉搜索树，否则则不是。
+  >
+  > ```python
+  > def helper(root, min, max):
+  >     if root is None: 
+  >         return True
+  >     if min is not None and root.val <= min:
+  >         return False
+  >     if max is not None and root.val >= max:
+  >         return False
+  >     if helper(root.left,min,root.val) and helper(root.right,root.val,max):
+  >         return True
+  >     else:
+  >         return False
+  > 
+  >     min_value, max_value = None, None
+  >     return helper(root, min_value, max_value)
+  > ```
+
+- No.99 Recover Binary Search Tree, Hard
+
+  > 方法一：找到中序遍历中顺序不对的两个节点位置，将其值交换。S(N) = O(N)
+  >
+  > 方法二：https://blog.csdn.net/qqxx6661/article/details/76565882 
+
+- No.100 Same Tree, Easy
+
+  > ```python
+  > if p == None and q == None:
+  >     return True
+  > 
+  > if p and q and p.val == q.val:
+  >     return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+  > return False
   > ```
   >
   > 

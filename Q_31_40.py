@@ -58,6 +58,25 @@ class Solution:
 
     # 33. Search in Rotated Sorted Array
     def search(self, nums: List[int], target: int) -> int:
+        # left, right = 0, size - 1
+        # while left <= right:
+        #     mid = (left + right) // 2
+        #     if target == nums[mid]:
+        #         return True
+        #     # nums[left to mid] is sorted 
+        #     if nums[left] <= nums[mid]:
+        #         if target > nums[mid] or target < nums[left]:
+        #             left = mid + 1
+        #         else:
+        #             right = mid - 1
+        #     # nums[mid to right] is sorted
+        #     else:
+        #         if target < nums[mid] or target > nums[right]:
+        #             right = mid - 1
+        #         else:
+        #             left = mid + 1
+
+        # return False
         size = len(nums)
         if size == 1:
             if nums[0] == target:
