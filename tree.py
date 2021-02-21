@@ -1,3 +1,5 @@
+from typing import List
+
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -83,6 +85,17 @@ class TreeNode:
             right = self.maxDepth(root.right)+1
             
             return max(left, right)
+
+    def buildTree(self, preorder: List[int], inorder: List[int]):
+        if preorder == []:
+            return None
+        
+        root = TreeNode(preorder[0])
+        index = inorder.index(preorder[0])
+        root.left = self.buildTree(preorder[1:index+1], inorder[:index])
+        root.right = self.buildTree(preorder[index+1:], inorder[index+1:])
+        return root
+
 
     # Morris 遍历 S(N) = O(1)
     # https://blog.csdn.net/danmo_wuhen/article/details/104339630

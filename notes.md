@@ -1451,4 +1451,75 @@
   > return False
   > ```
   >
+  
+- No.101 Symmetric Tree, Easy
+
+- No.102 Binary Tree Level Order Traversal, Medium
+
+- No.103 Binary Tree Zigzag Level Order Traversal, Medium
+
+  > ```python
+  > if root is None:
+  >     return []
   > 
+  > queue = []
+  > queue.append([root])
+  > ans = []
+  > flag = True
+  > 
+  > while queue:
+  >     curr_nodes = queue.pop(0)
+  >     vals = []
+  >     next_nodes = []
+  >     for node in curr_nodes:
+  >         vals.append(node.val)
+  >         if node.right:
+  >             next_nodes.append(node.right)
+  >         if node.left:
+  >             next_nodes.append(node.left)
+  > 
+  >     if next_nodes:
+  >         queue.append(next_nodes)
+  >     if flag:  # 奇数层为正序
+  >         vals.reverse()
+  >     flag = not flag
+  >     ans.append(vals)
+  >     
+  > return ans
+  > ```
+
+- No.104 Maximum Depth of Binary Tree, Easy
+
+- No.105 Construct Binary Tree from Preorder and Inorder Traversal, Medium
+
+  > ```python
+  > if preorder == []:
+  >     return None
+  > # 先序遍历第一个肯定是根节点
+  > root = TreeNode(preorder[0])
+  > index = inorder.index(preorder[0])
+  > root.left = self.buildTree(preorder[1:index+1], inorder[:index])
+  > root.right = self.buildTree(preorder[index+1:], inorder[index+1:])
+  > return root
+  > ```
+
+- No.106 Construct Binary Tree from inorder and Postorder Traversal, Medium
+
+  > ```python
+  > if inorder:
+  >     # 后序遍历最后一个肯定为根节点
+  >     root = TreeNode(postorder[-1])
+  > 
+  >     index = inorder.index(postorder[-1])
+  >     root.left = self.buildTree(inorder[:index], postorder[:index])
+  >     root.right = self.buildTree(inorder[index+1:], postorder[index:-1])
+  > 
+  >     return root
+  > else:
+  >     return None
+  > ```
+
+- No.107 Binary Tree Level Order Traversal II, Medium
+- No.108 Convert Sorted Array to Binary Search Tree, Easy
+
+- No.109 Convert Sorted List to Binary Search Tree, Medium
