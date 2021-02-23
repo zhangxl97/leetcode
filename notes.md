@@ -695,6 +695,7 @@
   >
   
 - No.43 Multiply Strings, Medium
+
 - No.58 Length of Last Word, Easy
 
 - No.65 Valid Number, Hard
@@ -814,7 +815,54 @@
   > return dp[-1]
   > ```
   >
+  
+- No.115 Distinct Subsequences, Hard
+  > 查找t中每一个字母出现在s中的位置，并比较当前候选位置是否在前一个字母的候选位置之后，若在，则该侯选位置可能构成t串，当前cnt加上之前的字母的候选可能组合数
+  > ```python
+  > if t == "":
+  >     return 1
+  > elif s == "":
+  >     return 0
+  >     
+  > kv = {}
+  > for i, c in enumerate(s):
+  >     if kv.get(c):
+  >         kv[c].append(i)
+  >     else:
+  >         kv[c] = [i]
   > 
+  > currs = kv.get(t[0])
+  > if currs is None:
+  >     return 0
+  > candidates = {c:1 for c in currs}
+  > # print(kv)
+  > 
+  > # print(candidates)
+  > for c in t[1:]:
+  >     currs = kv.get(c)
+  >     if currs is None:
+  >         return 0
+  >     
+  >     tmp = {}
+  >     for curr in currs:
+  >         cnt = 0
+  >         for can in candidates.keys():
+  >             if curr > can:
+  >                 cnt += candidates[can]
+  >         if cnt > 0:
+  >             tmp[curr] = cnt
+  >     candidates = tmp
+  >     # print(c, end="\t")
+  >     # print(candidates)
+  > 
+  > 
+  > ans = 0
+  > for can in candidates.keys():
+  >     ans +=  candidates[can]
+  > return ans
+  > ```
+
+
 
 
 
@@ -1298,7 +1346,7 @@
 - No.72 Edit Distance, Hard
 
   > ```python
-  > 		len_1 = len(word1)
+  > 	 len_1 = len(word1)
   >         len_2 = len(word2)
   >         if len_1 == 0:
   >             return len_2
@@ -1321,7 +1369,7 @@
 
 - No.79 Word Search, Medium
 
-  > ```
+  > ```python
   >         def dfs(x, y, index, visited, size_w, rows, cols):
   >             if index == size_w:
   >                 return True
@@ -1490,6 +1538,12 @@
 
 - No.104 Maximum Depth of Binary Tree, Easy
 
+  > ```python
+  > if root == None:
+  >     return 0
+  > return max(self.maxDepth(root.left),self.maxDepth(root.right))+1
+  > ```
+
 - No.105 Construct Binary Tree from Preorder and Inorder Traversal, Medium
 
   > ```python
@@ -1520,6 +1574,82 @@
   > ```
 
 - No.107 Binary Tree Level Order Traversal II, Medium
+
 - No.108 Convert Sorted Array to Binary Search Tree, Easy
 
 - No.109 Convert Sorted List to Binary Search Tree, Medium
+
+- No.110 Balanced Binary Tree, Easy
+
+- No.111 Minimum Depth of Binary Tree, Easy
+
+  > ```python
+  > if root == None:
+  >     return 0
+  > if root.left == None and root.right != None:
+  >     return self.minDepth( root.right ) + 1
+  > if root.left != None and root.right == None:
+  >     return self.minDepth( root.left ) + 1
+  > return min( self.minDepth( root.left ), self.minDepth( root.right ) ) + 1
+  > ```
+
+- No.112 Path Sum, Easy
+
+  > ```python
+  > def helper(root, targetSum):
+  >     targetSum -= root.val
+  >     if root.left is None and root.right is None:
+  >         if targetSum == 0:
+  >             return True
+  >         else:
+  >             return False
+  >         elif root.left is None:
+  >             return helper(root.right, targetSum)
+  >         elif root.right is None:
+  >             return helper(root.left, targetSum)
+  >         else:
+  >             return helper(root.left, targetSum) or helper(root.right, targetSum)
+  > if root is None:
+  >     return False
+  > else:
+  >     return helper(root, targetSum)
+  > ```
+
+- No.113 Path Sum II, Medium
+
+  > ```python
+  > from copy import deepcopy
+  > if root is None:
+  >     return []
+  > 
+  > ans = []
+  > 
+  > def helper(root, targetSum, tmp):
+  >     targetSum -= root.val
+  >     tmp.append(root.val)
+  >     if root.left is None and root.right is None:
+  >         if targetSum == 0:
+  >             ans.append(deepcopy(tmp))
+  >         else:
+  >             return 
+  > 
+  >     elif root.left is None:
+  >         helper(root.right, targetSum, tmp)
+  >         tmp.pop()
+  >     elif root.right is None:
+  >         helper(root.left, targetSum, tmp)
+  >         tmp.pop()
+  >     else:
+  >         helper(root.left, targetSum, tmp)
+  >         tmp.pop()
+  >         helper(root.right, targetSum, tmp)
+  >         tmp.pop()
+  > 
+  > helper(root, targetSum, [])
+  > 
+  > return ans
+  > ```
+
+- No.114 Flatten Binary Tree to Linked List, Medium
+
+  > 直接把前序遍历的顺序找出，然后遍历就行
