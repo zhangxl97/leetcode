@@ -65,16 +65,16 @@ class Solution:
         #         return True
         #     # nums[left to mid] is sorted 
         #     if nums[left] <= nums[mid]:
-        #         if target > nums[mid] or target < nums[left]:
-        #             left = mid + 1
-        #         else:
+        #         if target < nums[mid] and target >= nums[left]:
         #             right = mid - 1
+        #         else:
+        #             left = mid + 1
         #     # nums[mid to right] is sorted
         #     else:
-        #         if target < nums[mid] or target > nums[right]:
-        #             right = mid - 1
-        #         else:
+        #         if target > nums[mid] and target <= nums[right]:
         #             left = mid + 1
+        #         else:
+        #             right = mid - 1
 
         # return False
         size = len(nums)
@@ -352,9 +352,9 @@ def main():
     # 38
     # print(s.countAndSay(6))
     # 39
-    # print(s.combinationSum(candidates = [2,3,6,7], target = 7,))
+    print(s.combinationSum(candidates = [2,3,6,7], target = 7,))
     # 40
-    print(s.combinationSum2(candidates = [2,5,2,1,2], target = 5,))
+    # print(s.combinationSum2(candidates = [2,5,2,1,2], target = 5,))
 
 if __name__ == '__main__':
     main()

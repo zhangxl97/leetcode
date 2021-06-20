@@ -4,9 +4,8 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="reimplenment-Sum-GAN" />
     <orderEntry type="module" module-name="self_supervised" />
-    <orderEntry type="module" module-name="Deep-Summarization-Network-DSN-Reimplementation-PyTorch" />
+    <orderEntry type="module" module-name="video-summarization" />
     <orderEntry type="module" module-name="self-supervised-video-sum" />
   </component>
   <component name="TestRunnerService">

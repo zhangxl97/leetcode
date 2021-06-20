@@ -4,6 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../my project/reimplenment-Sum-GAN" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../my project/self-supervised-video-sum" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../my project/video-summarization" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../video sum/pytorch-vsumm-reinforce" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../课程资料/映像メディア  done/Deep-Summarization-Network-DSN-Reimplementation-PyTorch" vcs="Git" />
   </component>

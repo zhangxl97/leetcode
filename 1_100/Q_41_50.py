@@ -211,7 +211,34 @@ class Solution:
                 if last >= len(nums) - 1:
                     return ret
             curr = max(curr, i+nums[i])
-        # return ret
+            print(ret, last, curr)
+        return ret
+
+        # queue = [0]
+        # visited = [False] * len(nums)
+        # visited[0] = True
+        # res = -1   
+        # print(nums)
+
+        # while queue != []:
+        #     size = len(queue)
+        #     res += 1
+
+        #     for _ in range(size):
+        #         curr = queue.pop(0)
+
+        #         if curr == len(nums) - 1:
+        #             return res
+
+        #         for i in range(1, nums[curr] + 1):
+        #             if i + curr >= len(nums):
+        #                 break
+        #             if visited[i + curr] is False:
+        #                 queue.append(i + curr)
+        #     print(queue)
+        
+
+
 
     # 46. Permutations, Medium
     def permute(self, nums: List[int]) -> List[List[int]]:
@@ -299,7 +326,7 @@ def main():
     # 41
     # print(s.firstMissingPositive([0,-1,3,1]))
     # 42
-    # print(s.trap( [0,1,0,2,1,0,1,3,0,2,1,2,1]))
+    # print(s.trap( [0,1,0,2,1,0,1,3,2,1,2,1]))
     # 43
     # print(s.multiply("2", "3"))
     # 44

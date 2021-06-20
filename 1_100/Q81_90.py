@@ -165,23 +165,24 @@ class Solution:
 
     # 88 Merge Sorted Array, Easy
     def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
-        if n == 0:
-            return 
-        j = 0
-        i = 0
-        size = m + n
-        for index in range(size):
-            if j >= n:
-                break
-            elif nums2[j] < nums1[index]:
-                nums1[index + 1 : index + m - i + 1] = nums1[index : index + m - i]
-                nums1[index] = nums2[j]
-                j += 1
-            elif index >= m + j:
-                nums1[index] = nums2[j]
-                j += 1
+        index1, index2 = m - 1, n - 1
+        merge_index = m + n - 1
+
+        while index1 >= 0 or index2 >= 0:
+            if index1 < 0:
+                nums1[merge_index] = nums2[index2]
+                index2 -= 1
+            elif index2 < 0:
+                nums1[merge_index] = nums1[index1]
+                index1 -= 1
             else:
-                i += 1
+                if nums2[index2] > nums1[index1]:
+                    nums1[merge_index] = nums2[index2]
+                    index2 -= 1
+                else:
+                    nums1[merge_index] = nums1[index1]
+                    index1 -= 1
+            merge_index -= 1
 
     # 89 Gray code, Medium
     def grayCode(self, n: int) -> List[int]:

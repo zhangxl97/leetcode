@@ -286,7 +286,7 @@ class Solution:
         if size == 0:
             return []
         elif size == 1:
-            return [c for c in kv[digits]]
+            return list(kv[digits])
         temp = []
         for i in range(size):
             temp.append(kv[digits[i]])

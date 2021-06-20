@@ -144,6 +144,7 @@ class Solution:
         return ans
 
     # 108 Convert Sorted Array to Binary Search Tree, Easy
+    # in_order
     def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
         size = len(nums)
         if size == 0:

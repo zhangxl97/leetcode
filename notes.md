@@ -508,6 +508,73 @@
 
 - No.90 Subsets II, Medium
 
+- No.118 Pascal's Triangle, Easy
+
+- No.119 Pascal's Triangle II, Easy
+
+- No.121 Best Time to Buy and Sell Stock, Easy, one transaction
+
+- No.122 Best Time to Buy and Sell Stock II, Easy, multiple transactions
+
+  > ```python
+  > size = len(prices)
+  > if size <= 1:
+  >     return 0
+  > 
+  > min_buy = prices[0]
+  > tmp_max_profit = 0
+  > ans = 0
+  > for i in range(1, size):
+  >     if prices[i] > min_buy:
+  >         profit = prices[i] - min_buy
+  >         if profit > tmp_max_profit:
+  >             tmp_max_profit = profit
+  >         if i < size - 1 and prices[i] >= prices[i + 1]:
+  >             min_buy = prices[i + 1]
+  >             ans += tmp_max_profit
+  >             tmp_max_profit = 0
+  > 
+  >     else:
+  >         min_buy = prices[i]
+  > 
+  > ans += tmp_max_profit
+  > return ans
+  > ```
+
+- 123 Best Time to Buy and Sell Stock III, Hard, two transactions
+
+  > ```python
+  > days = len(prices)
+  > if days <= 1:
+  >     return 0
+  > 
+  > dp = [[0 for _ in range(days)] for i in range(3)]  # 交易0，1，2次的总收益
+  > 
+  > for i in range(1, 3):
+  >     max_profit = -prices[0]
+  >     for j in range(1, days):
+  >         # TLE Error
+  >         # local = 0
+  >         # max_index = 0
+  >         # for k in range(0, j):
+  >         #     if prices[j] - prices[k] + dp[i - 1][k] > local:
+  >         #         local = prices[j] - prices[k] + dp[i - 1][k]
+  >         #         max_index = k
+  >         # # dp[i][j - 1] 第i天什么都不做， 利润为前一天利润
+  >         # # dp[i-1][n] + diff 第i天在局部最大利润时卖出
+  >         # dp[i][j] = max(dp[i][j - 1], local)
+  > 		
+  >         # 将上述循环中重复计算的部分（max_profit）提出，减少计算量
+  >         dp[i][j] = max(dp[i][j - 1], prices[j] + max_profit)
+  >         max_profit = max(dp[i-1][j] - prices[j], max_profit)
+  > 
+  > print(tabulate(dp))
+  > return dp[-1][-1]
+  > 
+  > ```
+  >
+  > 
+
 
 
 ## **<span id="jump2">2 Linked list</span>**
@@ -862,7 +929,7 @@
   > return ans
   > ```
 
-
+- No.125 Valid Palindrome, Easy
 
 
 
@@ -1424,7 +1491,33 @@
   > return dp[-1][-1]
   > ```
 
+- No.120 Triangle, Medium
 
+  > ```python
+  > # dfs --> TLE
+  > # dp
+  > height = len(triangle)
+  > if height == 1:
+  >     return triangle[0][0]
+  > dp = [[0 for j in range(i + 1)] for i in range(height)]
+  > 
+  > dp[0][0] = triangle[0][0]
+  > for i in range(1, height):
+  >     for j in range(i + 1):
+  >         if j == 0:
+  >             dp[i][j] = dp[i - 1][j] + triangle[i][j]
+  >         elif j == i:
+  >             dp[i][j] = dp[i - 1][j - 1] + triangle[i][j]
+  >         else:
+  >             dp[i][j] = min(dp[i - 1][j], dp[i - 1][j - 1]) + triangle[i][j]
+  > # print(tabulate(dp))
+  > return min(dp[-1])
+  > 
+  > 
+  > print(tabulate(dp))
+  > ```
+  >
+  > 
 
 
 
@@ -1653,3 +1746,29 @@
 - No.114 Flatten Binary Tree to Linked List, Medium
 
   > 直接把前序遍历的顺序找出，然后遍历就行
+
+- No.116 Populating Next Right Pointers in Each Node, Medium
+- No.117 Populating Next Right Pointers in Each Node II, Medium
+
+- No.124 Binary Tree Maximum Path Sum, Hard
+
+  > ```python
+  > def maxPathSum(root):
+  >     if root is None:
+  >         return 0
+  >     
+  >     left = maxPathSum(root.left)
+  >     right = maxPathSum(root.right)
+  > 
+  >     self.maxSum = max(max(left, 0)+max(right, 0)+root.val, self.maxSum)
+  > 
+  >     # 返回的不是全局最大的路径和
+  >     # 而是以当前节点为拐点的最大路径和，相当于局部最大路径和
+  >     return max(left, right, 0) + root.val
+  > 
+  > self.maxSum = float("-inf")
+  > maxPathSum(root)
+  > return self.maxSum
+  > ```
+  >
+  > 
